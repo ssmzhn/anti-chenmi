@@ -1,5 +1,6 @@
 import datetime
 import json
+import argparse
 def somedayIsExists(year, month, day): # 判断某天是否存在
     # 判断是否闰年
     if year % 400 == 0:
@@ -72,17 +73,22 @@ def verifyDate(id_num): # 成没成年啊 id_num 为 str
     return False
 
 def main():
+    parser=argparse.ArgumentParser(description='身份证号合法性验证')
+    parser.add_argument('id',nargs=1,help='身份证号')
+    arg = parser.parse_args()
     f=open('govCode.json',encoding='UTF-8')
     jsdict = json.load(f)
-    test=input('让我开开盒罢: ')
+    test=arg.id[0]
     if isValidIdNumber(test,jsdict):
         print('是正常的身份证号捏')
         if verifyDate(test):
             print('您成年了！')
         else:
             print('主播还没成年呐')
+        print('地址:',jsdict[test[:6]]['text'])
+        print('出生日期: {}年{}月{}日'.format(test[6:10],test[10:12],test[12:14]))
     else:
-        print('这是什么几把，我看不懂')
+        print('非法的身份证号')
 
 if __name__ == '__main__':
     main()
