@@ -33,8 +33,8 @@ def isValidIdNumber(id_num,gov_code):
         return False
     # 身份证字符无问题，开始校验码验证
     id_num_list=list(id_num[::-1])
-    if id_num_list[17] in ('x','X'):
-        id_num_list[17]='10'
+    if id_num_list[0] in ('x','X'):
+        id_num_list[0]='10'
     verify = 0 # 存放校验结果
     for i in range(len(id_num_list)):
         weight = 2**i%11
